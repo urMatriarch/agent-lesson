@@ -1,4 +1,5 @@
 import os
+from google.genai import types
 
 def write_file(working_directory, file_path, content):
     working_file_path = os.path.join(working_directory, file_path)
@@ -23,3 +24,21 @@ def write_file(working_directory, file_path, content):
         return(f'Successfully wrote to "{file_path}" ({len(content)} characters written)')
     except:
         return(f'Error: unable to write to "{file_path}" due to unknown error. Please check inputs and try again.')
+
+schema_write_file = types.FunctionDeclaration(
+    name="write_file",
+    description="Writes or overites text to a file, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The path to the tile to be written into, relative to the working directory.",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="The content of the text to be written to the specified file."
+            )
+        },
+    ),
+)        
