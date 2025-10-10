@@ -4,11 +4,10 @@ from google.genai import types
 def write_file(working_directory, file_path, content):
     working_file_path = os.path.join(working_directory, file_path)
 
+    abs_working_directory = os.path.abspath(working_directory)
     abs_file_path = os.path.abspath(working_file_path)
-    if working_directory in abs_file_path:
-        pass
-    else:
-        return(f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory')
+    if not abs_file_path.startswith(abs_working_directory):
+        return(f'Error: Cannot execute "{file_path}" as it is outside the permitted working directory')
     
     if os.path.exists(os.path.split(working_file_path)[0]):
         pass

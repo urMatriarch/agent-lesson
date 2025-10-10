@@ -6,11 +6,10 @@ from google.genai import types
 def get_file_content(working_directory, file_path):
     working_path = os.path.join(working_directory, file_path)
 
-    file_path_abs = os.path.abspath(working_path)
-    if working_directory in file_path_abs:
-        pass
-    else:
-        return(f"Error: Cannot read '{file_path}' as it is outsde the permitted working directory.")
+    abs_working_directory = os.path.abspath(working_directory)
+    abs_file_path = os.path.abspath(working_path)
+    if not abs_file_path.startswith(abs_working_directory):
+        return(f'Error: Cannot execute "{file_path}" as it is outside the permitted working directory')
     
     if os.path.isfile(working_path):
         pass

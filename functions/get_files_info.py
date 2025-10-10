@@ -4,14 +4,13 @@ from google.genai import types
 
 def get_files_info(working_directory, directory="."):
     working_path = os.path.join(working_directory, directory)
+    abs_working_directory = os.path.abspath(working_directory)
     
     try:
         test_path = os.path.abspath(working_path)
     except:
         return(f"Error: Cannot create an absolute path using {working_path}. Please check inputs and try again.")
-    if working_directory in test_path:
-        pass
-    else:
+    if not test_path.startswith(abs_working_directory):
         return(f'Error: Cannot list "{directory}" as it is outside the permitted working directory')
     
     if os.path.isdir(working_path) == False:
